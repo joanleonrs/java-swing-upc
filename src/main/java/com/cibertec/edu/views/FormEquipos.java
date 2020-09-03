@@ -6,8 +6,9 @@
 package com.cibertec.edu.views;
 
 import com.cibertec.edu.model.Equipo;
-import javax.swing.JFrame;
+import java.sql.ResultSet;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -15,13 +16,22 @@ import javax.swing.JOptionPane;
  */
 public class FormEquipos extends javax.swing.JFrame {
     
+    /* Variables Globales */
+    Object[]columnas = {"Código", "Modelo", "Marca", "Categoría", "Estado"};
+    private DefaultTableModel model = new DefaultTableModel(null, columnas) {
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false;
+        }
+    };
+    private ResultSet res;
     int codigoInicial = 1001;
     
     public void configurarFrame() {
+        tableResultados.getTableHeader().setReorderingAllowed(false);
         btnAgregar.setVisible(false);
         btnNuevo.setVisible(true);
     }
-    
 
     /**
      * Creates new form FormEquipos
@@ -154,33 +164,7 @@ public class FormEquipos extends javax.swing.JFrame {
             }
         });
 
-        tableResultados.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "Código", "Modelo", "Marca", "Categoría", "Estado"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+        tableResultados.setModel(model);
         jScrollPane2.setViewportView(tableResultados);
 
         javax.swing.GroupLayout pnlPrincipalEquipoLayout = new javax.swing.GroupLayout(pnlPrincipalEquipo);
@@ -192,21 +176,20 @@ public class FormEquipos extends javax.swing.JFrame {
                     .addGroup(pnlPrincipalEquipoLayout.createSequentialGroup()
                         .addGap(33, 33, 33)
                         .addGroup(pnlPrincipalEquipoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(pnlPrincipalEquipoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jSeparator1)
-                                .addGroup(pnlPrincipalEquipoLayout.createSequentialGroup()
-                                    .addGroup(pnlPrincipalEquipoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGap(63, 63, 63)
-                                    .addGroup(pnlPrincipalEquipoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(txtCodigo)
-                                        .addComponent(cboEstado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(txtCategoria, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
-                                        .addComponent(txtMarca, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
-                                        .addComponent(txtModelo))))
+                            .addComponent(jSeparator1)
+                            .addGroup(pnlPrincipalEquipoLayout.createSequentialGroup()
+                                .addGroup(pnlPrincipalEquipoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(63, 63, 63)
+                                .addGroup(pnlPrincipalEquipoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtCodigo)
+                                    .addComponent(cboEstado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtCategoria, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
+                                    .addComponent(txtMarca, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
+                                    .addComponent(txtModelo)))
                             .addGroup(pnlPrincipalEquipoLayout.createSequentialGroup()
                                 .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -265,7 +248,7 @@ public class FormEquipos extends javax.swing.JFrame {
                     .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
             .addGroup(pnlPrincipalEquipoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(pnlPrincipalEquipoLayout.createSequentialGroup()
                     .addGap(125, 125, 125)
@@ -298,51 +281,39 @@ public class FormEquipos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        // TODO add your handling code here:
         
-        boolean valido = validarControles();
+        boolean esValido = esFormularioValido();
         
-        if (valido == true) {
-        
+        if (esValido == true) {
             int codigo = Integer.parseInt(txtCodigo.getText());
             String modelo = txtModelo.getText();
             String marca = txtMarca.getText();
             String categoria = txtCategoria.getText();
             boolean disponible = false;
 
-            if(cboEstado.getSelectedIndex() == 1){
+            if(cboEstado.getSelectedIndex() == 0){
                 disponible = true;
             }
 
             Equipo equipoAIngresar = new Equipo(codigo, modelo, marca, categoria, disponible);
-
-            System.out.println("DATOS DEL EQUIPO A REGISTRAR:");
-            System.out.println(equipoAIngresar.getCodigo() + "\n");
-            System.out.println(equipoAIngresar.getModelo() + "\n");
-            System.out.println(equipoAIngresar.getMarca() + "\n");
-            System.out.println(equipoAIngresar.getCategoria() + "\n");
-            System.out.println(equipoAIngresar.isDisponible()+ "\n");
+            
+            llenarTabla(equipoAIngresar);
 
             JOptionPane.showMessageDialog(null, "Datos Registrados: \n" + 
                     "Código: " + equipoAIngresar.getCodigo() + "\n" + 
                     "Modelo: " + equipoAIngresar.getModelo() + "\n" +
                     "Marca: " + equipoAIngresar.getMarca() + "\n" +
                     "Categoria: " + equipoAIngresar.getCategoria()+ "\n" +
-                    "Estado: " + equipoAIngresar.isDisponible()+ "\n");
+                    "Estado: " + ((equipoAIngresar.isDisponible() == true ) ? "Disponible" : "No Disponible") + "\n");
 
             limpiarControles();
-
-            //System.exit(0);
-
             btnAgregar.setVisible(false);
-            btnNuevo.setVisible(true);
-        
+            btnNuevo.setVisible(true);    
         }
         
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-
         limpiarControles();
         btnNuevo.setVisible(true);
         btnAgregar.setVisible(false);
@@ -356,6 +327,18 @@ public class FormEquipos extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEliminarActionPerformed
 
+    private void llenarTabla(Equipo equipoAIngresar) {
+        String[]data = {
+            String.valueOf(equipoAIngresar.getCodigo()),
+            equipoAIngresar.getModelo(),
+            equipoAIngresar.getMarca(),
+            equipoAIngresar.getCategoria(), 
+            ((equipoAIngresar.isDisponible() == true ) ? "Disponible" : "No Disponible")
+        };
+        model.addRow(data);
+        tableResultados.setModel(model);
+    }
+       
     private int aumentaCodigo(){
        codigoInicial++;
        return codigoInicial;
@@ -370,7 +353,7 @@ public class FormEquipos extends javax.swing.JFrame {
         txtCodigo.requestFocus();
     };
     
-    private boolean validarControles() {
+    private boolean esFormularioValido() {
         
         boolean esValido = false;
     
@@ -395,7 +378,6 @@ public class FormEquipos extends javax.swing.JFrame {
     
     
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
-
         btnAgregar.setVisible(true);
         btnNuevo.setVisible(false);
         txtModelo.requestFocus();
@@ -460,4 +442,5 @@ public class FormEquipos extends javax.swing.JFrame {
     private javax.swing.JTextField txtMarca;
     private javax.swing.JTextField txtModelo;
     // End of variables declaration//GEN-END:variables
+
 }

@@ -9,6 +9,7 @@ package com.cibertec.edu.model;
  *
  * @author joanleonrs
  */
+
 public class Equipo {
     private int codigo;
     private String modelo;
